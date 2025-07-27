@@ -52,6 +52,7 @@ class TESTR(nn.Module):
         self.max_text_len            = cfg.MODEL.TRANSFORMER.NUM_CHARS
         self.voc_size                = cfg.MODEL.TRANSFORMER.VOC_SIZE
         self.sigmoid_offset          = not cfg.MODEL.TRANSFORMER.USE_POLYGON
+        self.original_voc_size       = 96
 
         self.text_pos_embed   = PositionalEncoding1D(self.d_model, normalize=True, scale=self.pos_embed_scale)
         # fmt: on
@@ -67,7 +68,12 @@ class TESTR(nn.Module):
         self.ctrl_point_coord = MLP(self.d_model, self.d_model, 2, 3)
         self.bbox_coord = MLP(self.d_model, self.d_model, 4, 3)
         self.bbox_class = nn.Linear(self.d_model, self.num_classes)
-        self.text_class = nn.Linear(self.d_model, self.voc_size + 1)
+        self.text_class = nn.Linear(self.d_model, self.original_voc_size + 1)
+        self.text_class_add = nn.Sequential(
+            nn.Linear(self.original_voc_size + 1, 256),
+            nn.ReLU(),
+            nn.Linear(256, self.voc_size+1)
+        )
 
         # shared prior between instances (objects)
         self.ctrl_point_embed = nn.Embedding(self.num_ctrl_points, self.d_model)
@@ -149,7 +155,8 @@ class TESTR(nn.Module):
             else:
                 assert reference.shape[-1] == 4
                 tmp += reference[:, :, None, :2]
-            outputs_texts.append(self.text_class(hs_text[lvl]))
+            #outputs_texts.append(self.text_class(hs_text[lvl]))
+            outputs_texts.append(self.text_class_add(self.text_class(hs_text[lvl])))
             outputs_coord = sigmoid_offset(tmp, offset=self.sigmoid_offset)
             outputs_classes.append(outputs_class)
             outputs_coords.append(outputs_coord)

@@ -15,10 +15,10 @@ MODEL:
     ENC_N_POINTS: 4
     DEC_N_POINTS: 4
     # 中文词汇表大小 - 根据实际的VOCAB_SIZE调整
-    VOC_SIZE: 1096  # ASCII(95) + 中文常用字符(~1000) + 1 for NULL
+    VOC_SIZE: 1096 #1096  # ASCII(95) + 中文常用字符(~1000) + 1 for NULL
     NUM_CHARS: 25   # 可能需要根据中文文本长度调整
   BATEXT:
-    VOC_SIZE: 1096  # 与TRANSFORMER.VOC_SIZE保持一致
+    VOC_SIZE: 1096 #1096  # 与TRANSFORMER.VOC_SIZE保持一致
     NUM_CHARS: 25
 SOLVER:
   IMS_PER_BATCH: 2

@@ -1,4 +1,4 @@
- MODEL:
+MODEL:
   META_ARCHITECTURE: "TransformerDetector"
   MASK_ON: False
   PIXEL_MEAN: [123.675, 116.280, 103.530]
@@ -11,12 +11,13 @@
   TRANSFORMER:
     ENABLED: True
     INFERENCE_TH_TEST: 0.45
-    VOC_SIZE: 1096  # 中文词汇表大小
+    VOC_SIZE: 96 #1096  # 中文词汇表大小
     NUM_CHARS: 25   # 文本最大长度
   BATEXT:
-    VOC_SIZE: 1096  # 与TRANSFORMER.VOC_SIZE保持一致
-    NUM_CHARS: 25
+    VOC_SIZE: 96 #1096  # 与TRANSFORMER.VOC_SIZE保持一致
     CUSTOM_DICT: ""  # 如果需要自定义字典文件路径
+    NUM_CHARS: 25
+
 SOLVER:
   WEIGHT_DECAY: 1e-4
   OPTIMIZER: "ADAMW"
@@ -28,6 +29,7 @@ SOLVER:
     CLIP_TYPE: "full_model"
     CLIP_VALUE: 0.1
     NORM_TYPE: 2.0
+
 INPUT:
   HFLIP_TRAIN: False
   MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800, 832, 864, 896)

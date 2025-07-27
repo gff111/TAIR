@@ -10,3 +10,7 @@ tokenizer = MT5Tokenizer.from_pretrained("google/mt5-small")
 input_ids = tokenizer("translate chinese to German: 你好", return_tensors="pt").input_ids
 print(input_ids)
 print(tokenizer.decode(input_ids[0]))
+
+print("MT5 词表大小:", tokenizer.vocab_size)
+vocab = tokenizer.get_vocab()
+print("示例 token 和 id:", list(vocab.items())[:10])
