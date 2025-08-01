@@ -88,7 +88,7 @@ dataset:
   train:
     target: terediff.dataset.realesrgan.RealESRGANDataset
     params:
-      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train
+      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata  # SET PATH TO SA-TEXT DATASET
       file_backend_cfg:
         target: terediff.dataset.file_backend.HardDiskBackend
       out_size: 512
@@ -117,7 +117,7 @@ dataset:
       data_args: {
         'mode': 'TRAIN',
         'datasets': ['sam_cleaned_100k'], 
-        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train/restoration_dataset.json',
+        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata/restoration_dataset.json',
         'model_img_size': [512, 512],
         }
 
@@ -125,7 +125,7 @@ dataset:
   val:
     target: terediff.dataset.realesrgan.RealESRGANDataset
     params:
-      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train  # SET PATH TO SA-TEXT DATASET
+      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata  # SET PATH TO SA-TEXT DATASET
       file_backend_cfg:
         target: terediff.dataset.file_backend.HardDiskBackend
       out_size: 512
@@ -154,7 +154,7 @@ dataset:
       data_args: {
         'mode': 'VAL',
         'datasets': ['sam_cleaned_100k'], 
-        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train/restoration_dataset.json',
+        'ann_path': '//root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata/restoration_dataset.json',
         'model_img_size': [512, 512],
         }
 
@@ -219,11 +219,11 @@ train:
   ckpt_every: 10000
   log_loss_every: 50
   log_image_every: 500
-  batch_size: 2
+  batch_size: 8
   log_num_train_img: 2
-  learning_rate: 1e-5
+  learning_rate: 1e-4
   # experiment save directory path
-  exp_dir: ./model_ckpts/sam_cleaned_100k_cn/stage2
+  exp_dir: ./model_ckpts/sam_cleaned_100k_cn/stage2 
 
 val:
   num_workers: 4
@@ -234,7 +234,7 @@ val:
 log_args:
   log_tool: wandb
   wandb_key: 380929e516071a3069f2951519238817c6407b50
-  wandb_proj_name: tair-ori-2
+  wandb_proj_name: tair-v0-stage2
 ## We recommend using wandb, uncomment the following lines and set the values
 # log_args:
 #   log_tool: wandb
@@ -247,7 +247,7 @@ exp_args:
   testr_ckpt_dir: ./weights/totaltext_testr_R_50_polygon.pth   
   finetuning_method: text_spotting_module    # choose from [image_restoration_module, text_spotting_module, all_modules]
   unet_feat_sampling_timestep: [10,20,30,40,50]
-  resume_ckpt_dir: /root/paddlejob/workspace/env_run/guanfeiqiang/TAIR/model_ckpts/sam_cleaned_100k_cn/stage1/TRAIN_terediff_stage1_image_restoration_module_bs3_lr0.0001/0025000.pt
+  resume_ckpt_dir: /root/paddlejob/workspace/env_run/guanfeiqiang/TAIR/model_ckpts/sam_cleaned_100k_cn_v0/stage1/TRAIN_terediff_stage1_image_restoration_module_bs4_lr0.0001/0050000.pt
   ocr_loss_weight: 1.0
 
   

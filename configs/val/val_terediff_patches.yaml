@@ -115,8 +115,7 @@ log_args:
 exp_args:
   mode: VAL
   model_name: terediff_stage3
-  testr_ckpt_dir: 
-  resume_ckpt_dir: ./model_ckpts/sam_cleaned_100k_cn/stage3/TRAIN_terediff_stage3_all_modules_bs2_lr1e-05/0070000.pt   # to use our ckpt set it to /PATH/TO/terediff_stage3.pt
-  save_val_img_dir: ./val_img/val_img_res_3
+  testr_ckpt_dir: ./weights/totaltext_testr_R_50_polygon.pth  
+  resume_ckpt_dir: ./model_ckpts/sam_cleaned_100k_cn_v0/stage1/TRAIN_terediff_stage1_image_restoration_module_bs4_lr0.0001/0050000.pt   # to use our ckpt set it to /PATH/TO/terediff_stage3.pt
+  save_val_img_dir: /root/paddlejob/workspace/env_run/guanfeiqiang/TAIR_results/val_v0
   prompt_style: CAPTION   # choose from [CAPTION, TAG] for prompting styles
-
