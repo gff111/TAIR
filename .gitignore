@@ -59,3 +59,5 @@ val_img_res/
 val_img_res_2/
 model_ckpts.tar
 
+val_img/val_img_res_3/pred_texts_image71.png
+val_img/val_img_res_3/restored_image71.png

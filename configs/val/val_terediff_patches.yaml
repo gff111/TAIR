@@ -94,8 +94,8 @@ model:
       parameterization: v
 
 dataset:
-  gt_img_path: ./assets/demo_imgs/test_set_sr
-  lq_img_path: ./assets/demo_imgs/test_set_sr
+  gt_img_path: ./assets/demo_imgs/test_set_text
+  lq_img_path: ./assets/demo_imgs/test_set_text
 
 train:
   sd_path: ./weights/sd2.1-base-zsnr-laionaes5.ckpt       
@@ -114,9 +114,9 @@ log_args:
 
 exp_args:
   mode: VAL
-  model_name: terediff_stage2
+  model_name: terediff_stage3
   testr_ckpt_dir: 
-  resume_ckpt_dir: ./model_ckpts/sam_cleaned_100k_cn/stage2/TRAIN_terediff_stage2_text_spotting_module_bs2_lr1e-05/0040000.pt   # to use our ckpt set it to /PATH/TO/terediff_stage3.pt
-  save_val_img_dir: ./val_img/val_img_res_2
+  resume_ckpt_dir: ./model_ckpts/sam_cleaned_100k_cn/stage3/TRAIN_terediff_stage3_all_modules_bs2_lr1e-05/0070000.pt   # to use our ckpt set it to /PATH/TO/terediff_stage3.pt
+  save_val_img_dir: ./val_img/val_img_res_3
   prompt_style: CAPTION   # choose from [CAPTION, TAG] for prompting styles
 

@@ -314,7 +314,7 @@ def main(args):
         lines = []
         # 处理每个patch
         for gt_patch, lq_patch in zip(gt_patches, lq_patches):
-            val_gt = preprocess_gt(gt_patch).unsqueeze(0).to(device)  # 1 3 512 512
+            val_gt = preprocess_gt(gt_patch).unsqueeze(0).to(device)  # 1 3 512 512  128插值成512后进行网络迭代
             val_lq = preprocess_lq(lq_patch).unsqueeze(0).to(device)  # 1 3 512 512
             val_bs, _, val_H, val_W = val_gt.shape
             

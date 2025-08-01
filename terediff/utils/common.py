@@ -291,7 +291,10 @@ def log_txt_as_img(wh, xc):
         txt = Image.new("RGB", wh, color="white")
         draw = ImageDraw.Draw(txt)
         # font = ImageFont.truetype('font/DejaVuSans.ttf', size=size)
-        font = ImageFont.load_default()
+        try:
+            font = ImageFont.truetype('/root/paddlejob/workspace/env_run/guanfeiqiang/data/Palatino.ttc', size=12) # 中文
+        except:
+            font = ImageFont.load_default()
         nc = int(40 * (wh[0] / 256))
         lines = "\n".join(
             xc[bi][start : start + nc] for start in range(0, len(xc[bi]), nc)

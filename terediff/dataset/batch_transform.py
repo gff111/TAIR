@@ -283,6 +283,8 @@ class RealESRGANBatchTransform(BatchTransform):
         hq = (self.gt * 2 - 1).float().permute(0, 2, 3, 1).contiguous()
         txt = self.txt
         
-        # return dict(jpg=hq, hint=lq, txt=batch["txt"])
+        # 检查是否所有文件名都以'val'开头 lq=hq
+        if all(name.startswith('val') for name in batch['img_name']):
+            return hq, hq, txt, batch['text'], batch['bbox'], batch['poly'], batch['text_enc'], batch['img_name']
         return hq, lq, txt, batch['text'], batch['bbox'], batch['poly'], batch['text_enc'], batch['img_name']
         return hq, lq, txt

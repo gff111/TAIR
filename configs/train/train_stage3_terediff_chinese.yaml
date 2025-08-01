@@ -125,7 +125,7 @@ dataset:
   val:
     target: terediff.dataset.realesrgan.RealESRGANDataset
     params:
-      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train
+      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/val
       file_backend_cfg:
         target: terediff.dataset.file_backend.HardDiskBackend
       out_size: 512
@@ -153,7 +153,7 @@ dataset:
       data_args: {
         'mode': 'VAL',
         'datasets':['sam_cleaned_100k'], 
-        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train/restoration_dataset.json',
+        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/val/restoration_dataset.json',
         'model_img_size': [512, 512],
         }
 

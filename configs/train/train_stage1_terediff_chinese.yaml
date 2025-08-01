@@ -88,7 +88,7 @@ dataset:
   train:
     target: terediff.dataset.realesrgan.RealESRGANDataset
     params:
-      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train  # SET PATH TO SA-TEXT DATASET
+      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata  # SET PATH TO SA-TEXT DATASET
       file_backend_cfg:
         target: terediff.dataset.file_backend.HardDiskBackend
       out_size: 512
@@ -116,14 +116,14 @@ dataset:
       data_args: {
         'mode': 'TRAIN',
         'datasets': ['sam_cleaned_100k'], #
-        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train/restoration_dataset.json',
+        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata/restoration_dataset.json',
         'model_img_size': [512, 512],
       }
 
   val:
     target: terediff.dataset.realesrgan.RealESRGANDataset
     params:
-      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train  # SET PATH TO SA-TEXT DATASET
+      file_list: /root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata  # SET PATH TO SA-TEXT DATASET
       file_backend_cfg:
         target: terediff.dataset.file_backend.HardDiskBackend
       out_size: 512
@@ -152,7 +152,7 @@ dataset:
       data_args: {
         'mode': 'VAL',
         'datasets': ['sam_cleaned_100k'], 
-        'ann_path': '/root/paddlejob/workspace/env_run/guanfeiqiang/data/RealCE_crop512_52mm/train/restoration_dataset.json',
+        'ann_path': '//root/paddlejob/workspace/env_run/guanfeiqiang/data/train_v0_small_metadata/restoration_dataset.json',
         'model_img_size': [512, 512],
       }
 
@@ -214,10 +214,10 @@ train:
   ckpt_every: 25000       # save checkpoint every n steps
   log_loss_every: 50      # log loss every n steps
   log_image_every: 500    # log image every n steps
-  batch_size: 3           # training batch size per GPU
-  log_num_train_img: 3    # number of images to log during training
+  batch_size: 4           # training batch size per GPU
+  log_num_train_img: 4    # number of images to log during training
   learning_rate: 1e-4     # learning rate for training
-  exp_dir: ./model_ckpts/sam_cleaned_100k_cn/stage1    # experiment save directory path
+  exp_dir: ./model_ckpts/sam_cleaned_100k_cn_v0/stage1    # experiment save directory path
 
 val:
   num_workers: 4
@@ -228,7 +228,7 @@ val:
 log_args:
   log_tool: wandb
   wandb_key: 380929e516071a3069f2951519238817c6407b50  # gfq
-  wandb_proj_name: tair-ori
+  wandb_proj_name: tair-v0-strage1
 ## We recommend using wandb, uncomment the following lines and set the values
 # log_args:
 #   log_tool: wandb

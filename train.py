@@ -402,9 +402,20 @@ def main(args):
                                         f'sampling_val_FINAL_VIS/{val_batch_idx}_val_lq': wandb.Image(val_log_lq, caption=f'lq_img'),
                                         f'sampling_val_FINAL_VIS/{val_batch_idx}_val_cleaned': wandb.Image(val_log_clean, caption=f'cleaned_img'),
                                         f'sampling_val_FINAL_VIS/{val_batch_idx}_val_sampled': wandb.Image(torch.clip((pure_cldm.vae_decode(val_z) + 1) / 2, 0, 1), caption=f'sampled_img'),
-                                        f'sampling_val_FINAL_VIS/{val_batch_idx}_val_prompt': wandb.Image(log_txt_as_img((256, 256), val_log_prompt), caption=f'prompt'),
+                                        # f'sampling_val_FINAL_VIS/{val_batch_idx}_val_prompt': wandb.Image(log_txt_as_img((256, 256), val_log_prompt), caption=f'prompt'),
                                     })
                             wandb.log({f'sampling_val_FINAL_VIS/{val_batch_idx}_val_all': wandb.Image(torch.concat([val_log_lq, val_log_clean, torch.clip((pure_cldm.vae_decode(val_z) + 1) / 2, 0, 1), val_log_gt], dim=2), caption='lq_clean_sample,gt')})
+                            # 直接记录中文文本
+                            batch_size = len(val_log_prompt) 
+                            columns = ["批次索引"] + [f"提示词{i+1}" for i in range(batch_size)]
+                            text_table = wandb.Table(columns=columns)
+                            # 准备行数据（确保提示词为字符串类型）
+                            row_data = [val_batch_idx] + [str(prompt) for prompt in val_log_prompt]
+                            text_table.add_data(*row_data)
+                            wandb.log({
+                                f'sampling_val_FINAL_VIS/{val_batch_idx}_val_prompt_table': text_table
+                            })
+                            
 
                     # put models back to training 
                     for model in models.values():

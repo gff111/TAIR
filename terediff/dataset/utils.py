@@ -48,7 +48,7 @@ def encode(word):
 
 def is_valid_char(char):
     """检查字符是否在支持的字符集中"""
-    return char in CHAR_TO_IDX
+    return 32 <= ord(char) < 127 or char in CHAR_TO_IDX   
 
 
 def load_file_list(file_list_path: str, data_args=None):
@@ -70,12 +70,13 @@ def load_file_list(file_list_path: str, data_args=None):
                 json_data = sorted(json_data.items())
             
 
-            # 训练/验证分割
-            split_index = int(len(json_data) * 10 / 11)
-            if mode == 'TRAIN':
-                json_data = dict(json_data[:split_index])
-            elif mode == 'VAL':
-                json_data = dict(json_data[split_index:])
+            # 训练/验证分割 g:手动分割验证和训练
+            # split_index = int(len(json_data) * 10 / 11)
+            # if mode == 'TRAIN':
+            #     json_data = dict(json_data[:split_index])
+            # elif mode == 'VAL':
+            #     json_data = dict(json_data[split_index:])
+            json_data = dict(json_data[:])
 
 
             # image path 
@@ -109,11 +110,11 @@ def load_file_list(file_list_path: str, data_args=None):
                         if is_valid_char(char):
                             valid_char_count += 1
                     
-                    # 只接受完全支持的文本，并且长度合理
-                    if valid_char_count == len(text) and len(text) <= 25 and len(text) > 0:
+                    # 只接受完全支持的文本，只看在中文字符集中的数据集/这里需要修改 and len(text) <= 25 
+                    if valid_char_count == len(text) and len(text) > 0 and len(text) <= 25:
                         texts.append(text)
                         try:
-                            encoded_text = encode(text)
+                            encoded_text = encode(text) 
                             text_encs.append(encoded_text)
                             # 验证编码解码的一致性
                             decoded_text = decode(encoded_text)
@@ -156,8 +157,8 @@ def load_file_list(file_list_path: str, data_args=None):
                     # cv2.putText(img0_poly, text, (poly[0][0], poly[0][1]-5), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 0), 1)
                     # cv2.imwrite('./img0_box.jpg', img0_box)
                     # cv2.imwrite('./img0_poly.jpg', img0_poly)
-
-                assert len(boxes) == len(texts) == len(text_encs) == len(polys), f"Check loader!"
+                # print(len(boxes),len(texts),len(text_encs),len(polys))
+                assert len(boxes) == len(texts) == len(text_encs) == len(polys), f"Check loader!"  
 
                 # 如果过滤后没有有效的文本框，跳过这张图片
                 if len(boxes) == 0 or len(polys) == 0:
@@ -177,7 +178,8 @@ def load_file_list(file_list_path: str, data_args=None):
     
 
     if mode=='VAL':
-        files = random.sample(files, min(6, len(files)))
+        # files = random.sample(files, min(6, len(files)))
+        files = files[:6] # 选取前8张，若文件总数不足8张则取全部
 
     return files
 
