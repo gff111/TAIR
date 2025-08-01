@@ -110,8 +110,9 @@ def load_file_list(file_list_path: str, data_args=None):
                         if is_valid_char(char):
                             valid_char_count += 1
                     
-                    # 只接受完全支持的文本，只看在中文字符集中的数据集/这里需要修改 and len(text) <= 25 
-                    if valid_char_count == len(text) and len(text) > 0 and len(text) <= 25:
+                    # 只接受完全支持的文本，只看在中文字符集中的数据集/这里需要修改 and len(text) <= 25 and len(text) > 0
+                    # v1去掉了文字框和最小字符，运行无文字图进入训练
+                    if valid_char_count == len(text)  and len(text) <= 25:
                         texts.append(text)
                         try:
                             encoded_text = encode(text) 
@@ -160,9 +161,9 @@ def load_file_list(file_list_path: str, data_args=None):
                 # print(len(boxes),len(texts),len(text_encs),len(polys))
                 assert len(boxes) == len(texts) == len(text_encs) == len(polys), f"Check loader!"  
 
-                # 如果过滤后没有有效的文本框，跳过这张图片
-                if len(boxes) == 0 or len(polys) == 0:
-                    continue
+                # # 如果过滤后没有有效的文本框，跳过这张图片
+                # if len(boxes) == 0 or len(polys) == 0:
+                #     continue
             
                 # 生成描述文本
                 caption = [f'"{txt}"' for txt in texts]
