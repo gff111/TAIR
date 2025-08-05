@@ -22,6 +22,33 @@ import initialize
 
 import math
 
+def resize_img_4k(input_image):
+    """
+    Resizes a given input image to a 2K resolution while preserving aspect ratio.
+
+
+    Args:
+
+        input_image (Image): The input image object.
+
+
+    Returns:
+
+        Image: The resized image object with a resolution no greater than 2048x2048
+
+    """
+    target_area = 4096 * 4096
+    if (input_image.width * input_image.height) < target_area:
+        return input_image
+        return input_image, False
+    else:
+        aspect_ratio = input_image.width / input_image.height
+        new_width = int(round((target_area * aspect_ratio) ** 0.5 / 8) * 8)
+        new_height = int(round(target_area / new_width / 8) * 8)
+        img_resized = input_image.resize((new_width, new_height), resample=Image.LANCZOS)
+        return img_resized
+        return img_resized, True
+
 def split_image_with_overlap(image, patch_size=128, overlap=16):
     """
     将图像分割成带有重叠的小块
@@ -301,6 +328,11 @@ def main(args):
         
         gt_img = Image.open(gt_img_path)     # size: 512
         lq_img = Image.open(lq_img_path)     # size: 128
+        
+
+        # 如果大于4096*4096
+        gt_img = resize_img_4k(gt_img)
+        lq_img = resize_img_4k(lq_img)
         
         # 记录原始图像尺寸
         original_gt_size = gt_img.size[::-1]  # PIL的size是(width, height)，需要转换为(height, width)
